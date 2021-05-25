@@ -4,15 +4,21 @@ namespace Alura\Cursos\Controller;
 
 use Alura\Cursos\Entity\Curso;
 use Alura\Cursos\RenderHtmlTrait;
+use Nyholm\Psr7\Response;
 use Alura\Cursos\Infra\EntityManagerCreator;
-use Alura\Cursos\Controller\ControllerComHtml;
+use Psr\Http\Message\ServerRequestInterface;
+use Psr\Http\Message\ResponseInterface;
+use Psr\Http\Server\RequestHandlerInterface;
 
-class FormularioInsercao implements InterfaceControladorRequisicao
+
+class FormularioInsercao implements RequestHandlerInterface
 {
     use RenderHtmlTrait;
 
-    public function processarRequisicao(): void
+    public function handle(ServerRequestInterface $request): ResponseInterface
     {
-        echo $this->renderizarHtml('cursos/novo-curso.php', []);
+        $html = $this->renderizarHtml('cursos/novo-curso.php', []);
+
+        return new Response(200, [], $html);
     }
 }
